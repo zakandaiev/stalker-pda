@@ -1,0 +1,30 @@
+{
+	"name": "stalker-pda",
+	"version": "1.1.1",
+	"description": "Stalker PDA is a mobile assistant for a real stalker of Chernobyl Exclusion Zone",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "github.com/zakandaiev",
+	"license": "MIT",
+	"devDependencies": {
+		"browser-sync": "^2.26.12",
+		"del": "^5.1.0",
+		"gulp": "^4.0.2",
+		"gulp-autoprefixer": "^7.0.1",
+		"gulp-clean-css": "^4.3.0",
+		"gulp-htmlmin": "^5.0.1",
+		"gulp-imagemin": "^7.1.0",
+		"gulp-rigger": "^0.5.8",
+		"gulp-sass": "^4.1.0",
+		"gulp-sourcemaps": "^2.6.5",
+		"gulp-terser": "^1.2.1",
+		"node-sass": "^4.14.1"
+	},
+	"dependencies": {
+		"jquery": "^3.5.1",
+		"leaflet": "^1.6.0",
+		"normalize.css": "^8.0.1"
+	}
+}

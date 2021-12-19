@@ -1,0 +1,274 @@
+<div class="page_animated p-n">
+  <div class="map">
+    <div id="weather-map" class="map__map"></div>
+    <button id="weather-info-btn" class="btn map__info">
+      <svg class="btn-icon" x="0px" y="0px" viewBox="0 0 31.357 31.357"> <path d="M15.255,0c5.424,0,10.764,2.498,10.764,8.473c0,5.51-6.314,7.629-7.67,9.62c-1.018,1.481-0.678,3.562-3.475,3.562 c-1.822,0-2.712-1.482-2.712-2.838c0-5.046,7.414-6.188,7.414-10.343c0-2.287-1.522-3.643-4.066-3.643 c-5.424,0-3.306,5.592-7.414,5.592c-1.483,0-2.756-0.89-2.756-2.584C5.339,3.683,10.084,0,15.255,0z M15.044,24.406 c1.904,0,3.475,1.566,3.475,3.476c0,1.91-1.568,3.476-3.475,3.476c-1.907,0-3.476-1.564-3.476-3.476 C11.568,25.973,13.137,24.406,15.044,24.406z"/> </svg>
+    </button>
+    <button id="weather-geolocation-btn" class="btn map__geolocate">
+      <svg class="btn-icon" x="0px" y="0px" viewBox="0 0 384 384"> <g> <g> <path d="M192,136c-30.872,0-56,25.12-56,56s25.128,56,56,56s56-25.12,56-56S222.872,136,192,136z M192,216 c-13.232,0-24-10.768-24-24s10.768-24,24-24s24,10.768,24,24S205.232,216,192,216z"/> </g> </g> <g> <g> <path d="M368,176h-32.944C327.648,109.368,274.632,56.352,208,48.944V16c0-8.832-7.168-16-16-16c-8.832,0-16,7.168-16,16v32.944 C109.368,56.352,56.352,109.368,48.944,176H16c-8.832,0-16,7.168-16,16c0,8.832,7.168,16,16,16h32.944 C56.352,274.632,109.368,327.648,176,335.056V368c0,8.832,7.168,16,16,16c8.832,0,16-7.168,16-16v-32.944 c66.632-7.408,119.648-60.424,127.056-127.056H368c8.832,0,16-7.168,16-16C384,183.168,376.832,176,368,176z M192,304 c-61.76,0-112-50.24-112-112S130.24,80,192,80s112,50.24,112,112S253.76,304,192,304z"/> </g> </g> </svg>
+    </button>
+    <button id="weather-play-btn" class="btn map__play">
+      <svg class="btn-icon play" x="0px" y="0px" viewBox="0 0 163.861 163.861"> <path d="M34.857,3.613C20.084-4.861,8.107,2.081,8.107,19.106v125.637c0,17.042,11.977,23.975,26.75,15.509L144.67,97.275 c14.778-8.477,14.778-22.211,0-30.686L34.857,3.613z"/> </svg>
+      <svg class="btn-icon pause" x="0px" y="0px" viewBox="0 0 330 330"> <g> <path d="M230,0c-8.284,0-15,6.716-15,15v300c0,8.284,6.716,15,15,15c8.284,0,15-6.716,15-15V15 C245,6.716,238.284,0,230,0z"/> <path d="M100,0c-8.284,0-15,6.716-15,15v300c0,8.284,6.716,15,15,15c8.284,0,15-6.716,15-15V15 C115,6.716,108.284,0,100,0z"/> </g> </svg>
+    </button>
+    <div id="weather-timestamp" class="weather-timestamp">Время</div>
+    <div class="weather-legend">
+      <div class="weather-legend__item">
+        <div class="weather-legend__square cloud"></div>
+        <span>Моросящий дождь (вероятно)</span>
+      </div>
+      <div class="weather-legend__item">
+        <div class="weather-legend__square percip-1"></div>
+        <span>Моросящий дождь</span>
+      </div>
+      <div class="weather-legend__item">
+        <div class="weather-legend__square percip-2"></div>
+        <span>Слабый дождь</span>
+      </div>
+      <div class="weather-legend__item">
+        <div class="weather-legend__square percip-3"></div>
+        <span>Слабый дождь</span>
+      </div>
+      <div class="weather-legend__item">
+        <div class="weather-legend__square rainfall-1"></div>
+        <span>Дождь</span>
+      </div>
+      <div class="weather-legend__item">
+        <div class="weather-legend__square rainfall-2"></div>
+        <span>Дождь</span>
+      </div>
+      <div class="weather-legend__item">
+        <div class="weather-legend__square rainfall-3"></div>
+        <span>Дождь</span>
+      </div>
+      <div class="weather-legend__item">
+        <div class="weather-legend__square storm-1"></div>
+        <span>Дождь</span>
+      </div>
+      <div class="weather-legend__item">
+        <div class="weather-legend__square storm-2"></div>
+        <span>Гроза</span>
+      </div>
+      <div class="weather-legend__item">
+        <div class="weather-legend__square storm-3"></div>
+        <span>Гроза</span>
+      </div>
+      <div class="weather-legend__item">
+        <div class="weather-legend__square hail-1"></div>
+        <span>Град</span>
+      </div>
+      <div class="weather-legend__item">
+        <div class="weather-legend__square hail-2"></div>
+        <span>Град</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="weather-info">
+  <div class="weather-info__close">✕</div>
+  <h4 class="weather-info__title">Информация</h4>
+  <div class="weather-info__body">
+    <p>Анимированная карта осадков позволяет отслеживать перемещение зон осадков и их интенсивность в течении последних двух часов.</p>
+    <p>Воспользуйтесь кнопкой анимации осадков, чтобы лучше спрогнозировать куда "движется" дождь, какова его затянутось и интенсивность.</p>
+    <div class="weather-info__warn">
+      <h4>Внимание!</h4>
+      <ul>
+        <li>для работы дождевой карты требуется интернет</li>
+        <li>на карте (поверх подложки) отображаются <b>только</b> дождевые тучи</li>
+      </ul>
+    </div>
+    <p>Если в вашем регионе ничего не отображается (кроме слоя подложки), максимально отдалите карту и пройдитесь по миру.</p>
+    <p>Если погодный слой отобразился где-нибудь - значит карта работает правильно, просто в вашем регионе нет дождевой/снежной обстановки.</p>
+    <p>Если на карте во всём мире ничего не отображается, возможны проблемы с интернетом либо проблемы на стороне поставщика данных о погоде.</p>
+  </div>
+</div>
+
+<script>
+  var map = L.map('weather-map', {
+    center: [51.3052944, 30.0659306],
+    zoom: 6,
+    minZoom: 4,
+    maxZoom: 16,
+    attributionControl: false,
+    zoomControl: false
+  });
+  // add 1 layer
+  L.tileLayer(current_theme_map).addTo(map);
+  var current_loc_marker_icon = L.icon({
+    iconUrl: 'img/marker.png',
+    iconSize:     [32, 32], // size of the icon
+    iconAnchor:   [16, 32], // point of the icon which will correspond to marker's location
+    popupAnchor:  [0, -32] // point from which the popup should open relative to the iconAnchor
+  });
+
+  // MAP GEOLOCATION
+  var current_position, current_accuracy;
+  function geolocateMe() {
+    $("#weather-geolocation-btn .btn-icon").addClass("active");
+    var onLocationFound = function(position) {
+      var lat_lng = [position.coords.latitude,position.coords.longitude];
+      var accuracy = position.coords.accuracy;
+      // if position defined, then remove the existing position marker and accuracy circle from the map
+      if (current_position) {
+          map.removeLayer(current_position);
+          map.removeLayer(current_accuracy);
+      }
+      var radius = Math.round(accuracy / 2);
+      current_position = L.marker(lat_lng, {icon: current_loc_marker_icon}).addTo(map)
+        .bindPopup("Вы находитесь в радиусе " + radius + " м от центра круга");
+      current_accuracy = L.circle(lat_lng, radius).addTo(map);
+      //map.flyTo(lat_lng, 18);
+      map.panTo(new L.LatLng(position.coords.latitude, position.coords.longitude));
+      $("#weather-geolocation-btn .btn-icon").removeClass("active");
+    };
+    function onLocationError(error) {
+        navigator.notification.alert(
+          error.message,  // message
+          null, // callback
+          'Ошибка',  // title
+          'Ок'  // buttonName
+        );
+        $("#weather-geolocation-btn .btn-icon").removeClass("active");
+    }
+    navigator.geolocation.getCurrentPosition(onLocationFound, onLocationError, {maximumAge: 30000,enableHighAccuracy:true});
+  }
+  $("#weather-geolocation-btn").on("click", function() {
+    navigator.geolocation.activator.askActivation(function(response) {
+      geolocateMe();
+    }, function(response) {
+      navigator.notification.alert(
+        'Для этой функции необходимо разрешить и включить GPS!',  // message
+        null, // callback
+        'Внимание',  // title
+        'Ок'  // buttonName
+      );
+    });
+  });
+
+  // WEATHER
+  /**
+   * RainViewer radar animation part
+   * @type {number[]}
+   */
+  var timestamps = [];
+  var radarLayers = [];
+
+  var animationPosition = 0;
+  var animationTimer = false;
+
+  /**
+   * Load actual radar animation frames timestamps from RainViewer API
+   */
+  var apiRequest = new XMLHttpRequest();
+  apiRequest.open("GET", "https://api.rainviewer.com/public/maps.json", true);
+  apiRequest.onload = function(e) {
+      // save available timestamps and show the latest frame: "-1" means "timestamp.lenght - 1"
+      timestamps = JSON.parse(apiRequest.response);
+      showFrame(-1);
+  };
+  apiRequest.send();
+  /**
+   * Animation functions
+   * @param ts
+   */
+  function addLayer(ts) {
+      if (!radarLayers[ts]) {
+          radarLayers[ts] = new L.TileLayer('https://tilecache.rainviewer.com/v2/radar/' + ts + '/256/{z}/{x}/{y}/2/1_1.png', {
+              tileSize: 256,
+              opacity: 0.001,
+              zIndex: ts
+          });
+      }
+      if (!map.hasLayer(radarLayers[ts])) {
+          map.addLayer(radarLayers[ts]);
+      }
+  }
+  /**
+   * Display particular frame of animation for the @position
+   * If preloadOnly parameter is set to true, the frame layer only adds for the tiles preloading purpose
+   * @param position
+   * @param preloadOnly
+   */
+  function changeRadarPosition(position, preloadOnly) {
+      while (position >= timestamps.length) {
+          position -= timestamps.length;
+      }
+      while (position < 0) {
+          position += timestamps.length;
+      }
+      var currentTimestamp = timestamps[animationPosition];
+      var nextTimestamp = timestamps[position];
+      addLayer(nextTimestamp);
+      if (preloadOnly) {
+          return;
+      }
+      animationPosition = position;
+
+      if (radarLayers[currentTimestamp]) {
+          radarLayers[currentTimestamp].setOpacity(0);
+      }
+      radarLayers[nextTimestamp].setOpacity(0.7);
+
+      //document.getElementById("weather-timestamp").innerHTML = (new Date(nextTimestamp * 1000)).toLocaleString();
+
+      function checkTime(i) { // add a zero in front of numbers<10
+        return (i < 10) ? "0" + i : i;
+      }
+      var d_st = new Date(nextTimestamp * 1000),
+          d_st_hh = checkTime(d_st.getHours()),
+          d_st_mm = checkTime(d_st.getMinutes());
+      $("#weather-timestamp").html(d_st_hh+":"+d_st_mm);
+  }
+  /**
+   * Check avialability and show particular frame position from the timestamps list
+   */
+  function showFrame(nextPosition) {
+      var preloadingDirection = nextPosition - animationPosition > 0 ? 1 : -1;
+
+      changeRadarPosition(nextPosition);
+
+      // preload next next frame (typically, +1 frame)
+      // if don't do that, the animation will be blinking at the first loop
+      changeRadarPosition(nextPosition + preloadingDirection, true);
+  }
+  /**
+   * Stop the animation
+   * Check if the animation timeout is set and clear it.
+   */
+  function stop() {
+      if (animationTimer) {
+        $("#weather-play-btn").removeClass("active");
+        clearTimeout(animationTimer);
+        animationTimer = false;
+        return true;
+      }
+      return false;
+  }
+  function play() {
+      showFrame(animationPosition + 1);
+      // Main animation driver. Run this function every 500 ms
+      animationTimer = setTimeout(play, 300);
+      $("#weather-play-btn").addClass("active");
+  }
+  function playStop() {
+      if (!stop()) {
+          play();
+      }
+  }
+  $("#weather-play-btn").on("click", function() {
+    playStop();
+  });
+  // legend
+  $(".weather-legend").on("click", function() {
+    $(this).toggleClass("is-open");
+  });
+  // info
+  $("#weather-info-btn").on("click", function() {
+    $(".weather-info").addClass("visible");
+  });
+  $(".weather-info__close").on("click", function() {
+    $(".weather-info").removeClass("visible");
+  });
+
+</script>

@@ -1,0 +1,227 @@
+.media-page {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.media {
+  &__nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.05);
+    margin: 0 -16px 16px;
+    &-item {
+      width: calc(100% / 5);
+      text-align: center;
+      margin: 0 5px;
+      padding: 5px;
+      border-bottom: 2px solid rgba(0,0,0,0);
+      cursor: pointer;
+      &.active {
+        border-bottom: 2px solid $accent;
+      }
+    }
+  }
+}
+
+.posts {
+  display: block;
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+  &__disclaimer {
+    margin-bottom: 15px;
+    a {
+      text-decoration: underline;
+      font-style: italic;
+    }
+  }
+  &__loadmore {
+    display: block;
+    width: 100%;
+    text-align: center;
+    transition: all .3s;
+    &_none {
+      display: block;
+      width: fit-content;
+      margin: 0 auto;
+    }
+  }
+}
+.post {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  box-shadow: $shadow-1;
+  &__img {
+    display: block;
+    width: 100%;
+  }
+  &__title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 5px;
+    padding: 10px 15px;
+    border-bottom: 1px solid #dedede;
+  }
+  &__body {
+    padding: 10px 15px;
+    h1,h2,h3,h4,h5,h6,p {
+      margin: 0;
+      padding: 0;
+      font-size: 14px;
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+  &__readmore {
+    display: block;
+    padding: 0 15px 10px;
+    text-align: right;
+    .btn {
+      padding: 3px 12px;
+    }
+    &-close {
+      display: flex;
+      justify-content: flex-end;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    &-content {
+      position: fixed;
+      z-index: 10;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden auto;
+      padding: 16px;
+      background: #fff;
+      text-align: left;
+      transform: translateY(-100%);
+      visibility: hidden;
+      transition: transform 700ms cubic-bezier(0.75, 0, 0, 1), visibility 700ms linear;
+    }
+  }
+  &.is-open .post__readmore-content {
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+.loader-wrapper {
+  width: 100%;
+  height: 34vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.loading-text {
+  text-align: center;
+  margin: 0;
+}
+.loader {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  span {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 4px solid $accent;
+    border-radius: 50%;
+    animation: loading 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: $accent transparent transparent transparent;
+    &:nth-child(1) {
+      animation-delay: -0.45s;
+    }
+    &:nth-child(2) {
+      animation-delay: -0.3s;
+    }
+    &:nth-child(3) {
+      animation-delay: -0.15s;
+    }
+  }
+}
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate__animated {
+  animation-duration: .5s;
+  animation-fill-mode: both;
+}
+.animate__zoomIn {
+  animation-name: zoomIn;
+}
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.jokes {
+  display: block;
+  width: 100%;
+  // media-page is off
+  /* padding-left: 16px;
+  padding-right: 16px; */
+  &__item {
+    text-align: left;
+    h1,h2,h3,h4,h5,h6,p {
+      margin: 0;
+      margin-bottom: 10px;
+    }
+  }
+  &__next {
+    display: flex;
+    justify-content: center;
+    margin-top: 6px;
+    margin-bottom: 14px;
+  }
+}
+
+.name-generator {
+  display: block;
+  width: 100%;
+  // media-page is off
+  /* padding-left: 16px;
+  padding-right: 16px; */
+  &__name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px 0;
+    margin-bottom: 30px;
+    font-size: 18px;
+    border: 30px solid #000;
+    border-image-source: url(../img/stalker_icon.png);
+  }
+  &__name-input {
+    display: block;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  &__btn {
+    display: flex;
+    justify-content: center;
+  }
+}

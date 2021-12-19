@@ -1,0 +1,113 @@
+<div class="page_animated">
+  <h2 class="page__title">У костра</h2>
+  <div class="accordion">
+    <div class="accordion__item">
+      <div class="accordion__btn">Сталкерские анекдоты</div>
+      <div class="accordion__body">
+        <div class="jokes">
+          <div id="jokes"></div>
+          <div class="jokes__next">
+            <button class="btn btn-primary">Следующий</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion__item">
+      <div class="accordion__btn">Генератор сталкерских имён</div>
+      <div class="accordion__body">
+        <div class="name-generator">
+          <div id="stalker-name" class="name-generator__name">Результат</div>
+          <input type="text" maxlength="18" class="name-generator__name-input" placeholder="Своё имя">
+          <div class="name-generator__btn"><button class="btn btn-primary">Сгенерировать</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <script src="js/slick.min.js"></script>
+<script src="js/jokes.js"></script>
+<script src="js/stalker-names.js"></script>
+<script src="js/text-shuffle.js"></script> -->
+<script>
+  var allPanels = $(".accordion__body");
+  $(".accordion__btn").on("click", function(e) {
+    e.preventDefault();
+    var item = $(this).parent();
+    if(!item.hasClass('active')){
+      allPanels.slideUp();
+      item.addClass("active").siblings().removeClass("active");
+      item.find(".accordion__body").slideDown();
+    } else {
+      item.removeClass("active");
+      item.find(".accordion__body").slideUp();
+    }
+    return;
+  });
+
+  var jokes = _jokes.sort( () => Math.random() - 0.5);
+  var vPool="";
+  $.each(jokes, function(i, val) {
+      vPool += '<div class="jokes__item">' + "<h4>Серия: " + val.category + "</h4>" + val.text + "</div>";
+  });
+  $('#jokes').html(vPool);
+
+  $('#jokes').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    infinite: true,
+    adaptiveHeight: true,
+    fade: true
+  });allPanels.slideUp();
+  $('.jokes__next > .btn').click(function(e) {
+    e.preventDefault();
+    $('#jokes').slick('slickNext');
+  });
+
+  var fnames = _firstname;
+  var snames = _surname;
+  function randomInteger(min, max) {
+    // случайное число от min до (max+1)
+    let rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
+  }
+
+  var audio_gen_name = document.createElement('audio');
+  audio_gen_name.setAttribute('src', 'audio/contact_8.ogg');
+
+  $(".name-generator__btn .btn").on("click", function(e){
+    e.preventDefault();
+    $(this).prop("disabled", true);
+    var fname = randomInteger(0, fnames.length);
+    var sname = randomInteger(0, snames.length);
+    var generated_name = fnames[fname].name + ' ' + snames[sname].name;
+    if ( $(".name-generator__name-input").val().length ) {
+      generated_name = $(".name-generator__name-input").val() + ' ' + snames[sname].name;
+    }
+    $("#stalker-name").html(generated_name);
+    $('#stalker-name').NylAutoWriter({
+      // text color
+      color: '#fff',
+      // background color of cursor
+      backgroundColor: '#1976d2',
+      // custom letter mask
+      mask: 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',
+      // timeout in milliseconds
+      timeout: 10,
+      // force back and white effect
+      blackAndWhite: false,
+      // the number of random iterations used per letter
+      iterations: 5,
+      // font weight
+      fontWeight: 'normal'
+    },function(){
+      if (current_theme === 'stalker') {
+        audio_gen_name.play();
+      }
+      $(".name-generator__btn .btn").prop("disabled", false);
+    });
+  });
+
+</script>

@@ -1,0 +1,63 @@
+$dark_bg: #121212;
+$dark_text: rgba(#fff, .87);
+
+[data-theme="dark"] {
+  // MAIN
+  background: $dark_bg;
+  color: $dark_text;
+  a {
+    color: $dark_text;
+  }
+  .page {
+    background: $dark_bg;
+  }
+  .accordion {
+    &__btn {
+      background-color: #212121;
+      &::before, &::after {
+        background: $dark_text;
+      }
+    }
+  }
+  // NAVIGATE
+  .nav {
+    background: $dark_bg;
+    &__item-icon {
+      fill: $dark_text;
+      color: $dark_text;
+    }
+    &__item.active .nav__item-icon {
+      fill: $accent;
+      color: $accent;
+    }
+  }
+  // HOME
+  .map__map {
+    background: $dark_bg;
+  }
+  .map .btn {
+    background: $dark_bg;
+  }
+  .map .btn-icon {
+    fill: $dark_text;
+    color: $dark_text;
+    &.active {
+      fill: $accent;
+      color: $accent;
+    }
+  }
+  // WEATHER
+  .map {
+    .weather-timestamp,
+    .weather-legend {
+      background: $dark_bg;
+    }
+  }
+  .weather-info {
+    background: $dark_bg;
+  }
+  // MEDIA
+  .post {
+    background: #212121;
+  }
+}

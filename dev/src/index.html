@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+	<meta charset="utf-8">
+	
+	<title>Сталкерский ПДА</title>
+	<meta name="description" content="Сталкерский ПДА">
+	<meta name="keywords" content="Сталкерский ПДА, пда, сталкер, ЧЗО, ЧЗГС, Припять">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, target-densitydpi=device-dpi, viewport-fit=cover">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="format-detection" content="telephone=no">
+
+	<link rel="icon" href="favicon.ico">
+	<link rel="apple-touch-icon" sizes="180x180" href="favicon-180x180.png">
+
+  <!-- Cordova -->
+  <script type="text/javascript" src="cordova.js"></script>
+  
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="leaflet/leaflet.css" />
+  <script src="leaflet/leaflet.js"></script>
+
+  <!-- Main JS -->
+  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript">
+      app.initialize();
+  </script>
+	
+  <!-- Main CSS -->
+	<link rel="stylesheet" href="css/main.css">
+
+</head>
+
+<body data-theme="light">
+
+  <div class="app">
+      <div id="deviceready">
+        
+        //= template/navigate.html
+
+        <main class="main">
+          //= template/home.html
+          <div id="page" class="page">
+            <!-- jQuery load page when navigation item clicked-->
+          </div>
+        </main>
+
+      </div>
+  </div>
+
+</body>
+
+</html>

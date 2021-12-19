@@ -1,0 +1,182 @@
+<div class="page_animated">
+  <h2 class="page__title">Настройки</h2>
+
+  <div class="settings">
+    <!-- <p>Внимание! После применения новых настроек нужно перезапустить приложение для его правильной работы.</p> -->
+    <h4 class="settings__title">Карта</h4>
+    <form id="map-settings" class="form">
+      <label>
+         <input type="checkbox" name="map_offline_tile">
+         <span>Отображать оффлайн слой ЧЗО</span>
+         <i>Вы можете пользоваться картой и её функциями без интернета. Оффлайн слой полностью охватывает область ЧЗО, но он не адаптируется под выбранную тему.</i>
+      </label>
+      <!-- <label>
+         <input type="checkbox" name="map_ortophoto">
+         <span>Отображать спутниковую карту вместо обычной</span>
+         <i>Требуется подключение к интернету. Этот слой не адаптируется под выбранную тему.</i>
+      </label> -->
+      <input type="submit" value="Применить" class="btn btn-primary">
+      <p>
+        Для использования оффлайн карты ЧЗО вам нужно сначала загрузить её в память устройства.
+        <i class="form-label-desc"> Максимальный зум слоя - 16, зум карты - 18, те. при максимальном увеличении карты оффлайн слой будет терять в качестве. Это сделано для существенной экономии места, потому что с увеличением зума кол-во тайлов растёт в геометрической прогрессии.</i>
+      </p>
+      <div class="settings__down-btn">
+        <button id="down">Скачать</button>
+        <button id="delcache">Удалить оффлайн карту</button>
+      </div>
+      <div id="progress" class="settings__progress">
+        <div class="progressbar"></div>
+        <span class="value"></span>
+      </div>
+      <div id="cache_status"></div>
+    </form>
+    <h4 class="settings__title">Тема</h4>
+    <form id="theme-chooser" class="form">
+      <label>
+         <input type="radio" name="theme" value="light" checked>
+         <span>Светлая</span>
+         <i>Хорошо подходит для походов в дневное время суток</i>
+      </label>
+      <label>
+         <input type="radio" name="theme" value="dark">
+         <span>Тёмная</span>
+         <i>Хорошо подходит для походов в ночное время суток</i>
+      </label>
+      <label>
+         <input type="radio" name="theme" value="stalker">
+         <span>Сталкерская</span>
+         <i>Для любителей сталкерской атмосферы</i>
+      </label>
+      <input type="submit" value="Применить" class="btn btn-primary">
+    </form>
+    <h4 class="settings__title">Связь с автором</h4>
+    <div class="contacts">
+      <p>Все вопросы и предложения можно смело направлять почту:
+        <a href="mailto:zakandaiev@gmail.com">zakandaiev@gmail.com</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  $("#map-settings").on("submit", function(e){
+    e.preventDefault();
+    if ( $(this).find("[name='map_offline_tile']").is(':checked') ) {
+      localStorage.setItem("map_offline_tile", "yes");
+    } else {
+      localStorage.setItem("map_offline_tile", "no");
+    }
+    location.reload();
+  });
+  $("#theme-chooser").on("submit", function(e){
+    e.preventDefault();
+    current_theme = $(this).find("[name='theme']:checked").val();
+    setTheme();
+    updateTheme();
+    location.reload();
+  });
+
+  if ( localStorage.getItem("map_offline_tile") === "yes" ) {
+    $("#map-settings").find("input[name='map_offline_tile']").prop('checked', true);
+  } else {
+    $("#map-settings").find("input[name='map_offline_tile']").prop('checked', false);
+  }
+
+  $("#down").on("click", function(e){
+    e.preventDefault();
+    var rectangle = L.rectangle([[51.544, 30.599], [50.979, 29.219]])._bounds;
+    var tile_list = home_map_offline_layer.calculateXYZListFromRectangle(rectangle, 8, 16);
+
+    function downloadOfflineMap() {
+      home_map_offline_layer.downloadXYZList(
+        // 1st param: a list of XYZ objects indicating tiles to download
+        tile_list,
+        // 2nd param: overwrite existing tiles on disk? if no then a tile already on disk will be kept, which can be a big time saver
+        false,
+        // 3rd param: progress callback
+        // receives the number of tiles downloaded and the number of tiles total; caller can calculate a percentage, update progress bar, etc.
+        function (done,total) {
+            var percent = Math.round(100 * done / total);
+            $("#progress").addClass("visible");
+            $("#progress > .progressbar").css("width", percent+"%");
+            $("#progress > .value").html(percent+"%");
+            $("#cache_status").html("Файлы карты: " + done  + " / " + total);
+        },
+        // 4th param: complete callback
+        // no parameters are given, but we know we're done!
+        function () {
+            // for this demo, on success we use another L.TileLayer.Cordova feature and show the disk usage
+            localStorage.setItem("map_offline_tile_url", home_map_offline_layer.returnOfflineUrl());
+            $("#progress > .progressbar").css("width", "100%");
+            $("#progress > .value").html("100%");
+            navigator.notification.alert(
+              'Оффлайн карта скачена!',  // message
+              null, // callback
+              'Скачивание',  // title
+              'Ок'  // buttonName
+            );
+        },
+        // 5th param: error callback
+        // parameter is the error message string
+        function (error) {
+          navigator.notification.alert(
+            error.message,  // message
+            null, // callback
+            'Ошибка',  // title
+            'Ок'  // buttonName
+          );
+        }
+      );
+    }
+    function onDownConfirm(buttonIndex) {
+        if ( buttonIndex === 1 ) {
+          downloadOfflineMap();
+        } else {
+          return;
+        }
+    }
+    navigator.notification.confirm(
+        'Для скачивания потребуется наличие интернета и около 300Mb свободного места на устройстве. Примерное время скачивания 1 час (зависит от скорости отдачи сервера OSM). Во время скачивания рекомендуется не закрывать и не сворачивать приложение, а также держать экран включенным. Вы подтверждаете, что хотите скачать оффлайн карту?', // message
+         onDownConfirm,            // callback to invoke with index of button pressed
+        'Скачивание оффлайн карты',           // title
+        ['Подтверждаю','Нет']     // buttonLabels
+    );
+  });
+
+  function testEmpty() {
+    home_map_offline_layer.emptyCache(function (oks,fails) {
+      var message = "Оффлайн карта успешно удалена с памяти устройства!\n" + oks + " файлов удалено\n" + fails + " провалено";
+      navigator.notification.alert(
+        message,  // message
+        null, // callback
+        'Удаление',  // title
+        'Ок'  // buttonName
+      );
+    })
+  }
+
+  $("#delcache").on("click", function(e){
+    e.preventDefault();
+    function onDelConfirm(buttonIndex) {
+        if ( buttonIndex === 1 ) {
+          testEmpty();
+          $("#cache_status").html("");
+        } else {
+          return;
+        }
+    }
+    navigator.notification.confirm(
+        'Вы подтверждаете, что хотите удалить оффлайн карту с памяти устройства?', // message
+         onDelConfirm,            // callback to invoke with index of button pressed
+        'Удаление оффлайн карты',           // title
+        ['Подтверждаю','Нет']     // buttonLabels
+    );
+  });
+
+  if ( localStorage.getItem("map_offline_tile_url") !== null ) {
+    $("#cache_status").html("Оффлайн карта скачена.");
+  }
+
+  $("#theme-chooser").find("input[value='"+current_theme+"']").prop('checked', true);
+
+</script>

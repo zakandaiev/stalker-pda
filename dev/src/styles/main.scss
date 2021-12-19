@@ -1,0 +1,230 @@
+/* ==========  Third party  ========== */
+@import "normalize.css/normalize";
+
+/* ==========  Variables, Mixins, Fonts ========== */
+@import "vars";
+@import "fonts";
+
+/* ==========  Global ========== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
+  -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important;
+  outline: none !important;
+} 
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  -webkit-touch-callout: none;      /* prevent callout to copy image, etc when tap to hold */
+  -webkit-text-size-adjust: none;   /* prevent webkit from resizing text to fit */
+  -webkit-user-select: none;        /* prevent copy paste, to allow, change 'none' to 'text' */
+
+  height: 100vh;
+  max-height: 100%;
+  overflow: hidden;
+
+  font-family: $body-font;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.75;
+  position: relative;
+  color: $text-color;
+  background-color: $bg;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: $body-font;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+  &:hover, &:focus, &:active {
+    text-decoration: underline;
+  }
+}
+
+b, strong {
+  font-weight: 700;
+}
+
+img, iframe, embed {
+  max-width: 100%;
+  height: auto;
+}
+
+.main {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  padding-bottom: 60px;
+}
+
+.page {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 60px;
+  background: #fff;
+  transform: translateY(100%);
+  visibility: hidden;
+  transition: transform 700ms cubic-bezier(0.75, 0, 0, 1), visibility 700ms linear;
+  &.visible {
+    visibility: visible;
+    transform: translateY(0);
+  }
+  &__title {
+    margin: 0 0 30px;
+    font-size: 24px;
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  &_animated {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 16px;
+    overflow: hidden auto;
+    position: relative;
+    // anim
+    /* animation-name: page_appear;
+    animation-duration: 1s;
+    animation-fill-mode: both; */
+  }
+  @keyframes page_appear {
+    0% {
+      -webkit-transform: translateY(-1200px) scale(0.7);
+      transform: translateY(-1200px) scale(0.7);
+      opacity: 0.7;
+    }
+
+    80% {
+      -webkit-transform: translateY(0px) scale(0.7);
+      transform: translateY(0px) scale(0.7);
+      opacity: 0.7;
+    }
+
+    100% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+.btn {
+  // reset default button styles
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background: none;
+  // reset end
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .3s;
+  &:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+.btn-primary {
+  color: #fff;
+  background: $accent;
+}
+
+.m-n {
+  margin: 0 !important;
+}
+.p-n {
+  padding: 0 !important;
+}
+
+.form-label-desc {
+  margin-top: 5px;
+  display: block;
+  margin-left: 18px;
+  color: #959595;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  &__item {
+    &.active {
+      .accordion__btn::after {
+        opacity: 0;
+      }
+    }
+  }
+  &__btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    padding-right: 40px;
+    background-color: #eee;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      transform: translateY(-50%);
+      background: $text-color;
+      transition: all .3s;
+    }
+    &::before {
+      right: 16px;
+      width: 15px;
+      height: 1px;
+    }
+    &::after {
+      right: 23px;
+      width: 1px;
+      height: 15px;
+    }
+  }
+  &__body {
+    padding: 16px;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }
+}
+
+/* ==========  Vendor  ========== */
+@import "vendor/slick";
+
+/* ==========  Custom  ========== */
+@import "partials/navigate";
+@import "partials/home";
+@import "partials/weather";
+@import "partials/media";
+@import "partials/settings";
+
+/* ==========  Themes  ========== */
+@import "themes/theme-dark";
+@import "themes/theme-stalker";
