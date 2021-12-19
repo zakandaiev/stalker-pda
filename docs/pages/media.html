@@ -1,0 +1,158 @@
+<div class="page_animated media-page">
+  <h2 class="page__title">Медиа</h2>
+  <div class="media__nav">
+    <div data-slide="1" class="media__nav-item active">Новости</div>
+    <div data-slide="2" class="media__nav-item">Анекдоты</div>
+  </div>
+  <div id="slick">
+    <div id="media">
+      <div class="posts">
+        <div v-if="!loading" class="posts__disclaimer">Все новости предоставлены <a href="https://www.chornobyl.com.ua/" target="_blank">chornobyl.com.ua</a></div>
+        <!-- Loader -->
+        <div v-if="loading" class="loader-wrapper">
+          <span class="loader"><span></span><span></span><span></span><span>
+        </div>
+        <p v-if="loading" class="loading-text">Загрузка новостей...</p>
+        <!-- Post item -->
+        <transition-group 
+          v-else="loading"
+          tag="div"
+          enter-active-class="animate__animated animate__zoomIn animate__faster"
+          appear
+        >
+        <div v-for="post in posts"
+             :key="post.id"
+             class="post">
+          <img v-if="post._embedded['wp:featuredmedia']['0'].source_url !== undefined" v-bind:src="`${post._embedded['wp:featuredmedia']['0'].source_url}`" class="post__img" alt="Изображение новости">
+          <div v-html="post.title.rendered" class="post__title"></div>
+          <div v-html="post.excerpt.rendered" class="post__body"></div>
+          <div class="post__readmore">
+            <button class="btn btn-primary">Подробнее</button>
+            <div class="post__readmore-content">
+              <div class="post__readmore-close">✕</div>
+              <div v-html="post.content.renderedd"></div>
+            </div>
+          </div>
+        </div>
+        </transition-group>
+        <div v-if="!loading">
+          <div v-if="!postsLengthFull" @click="loadMorePosts" class="posts__loadmore">
+            <div class="btn btn-primary">
+              <span v-if="loadingPosts">Загрузка...</span>
+              <span v-else>Загрузить еще</span>
+            </div>
+          </div>
+          <div v-else class="posts__loadmore_none">Больше нет новостей.</div>
+        </div>
+      </div>
+    </div>
+    <div id="jokes">
+      <div class="jokes">
+        <div v-html="currentJoke.text" class="jokes__item"></div>
+        <div class="jokes__next">
+          <button @click="loadJoke" class="btn btn-primary">Следующий</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/vue.min.js"></script>
+<script>
+new Vue({
+  el: '#media',
+  data: {
+    postsUrl: 'https://www.chornobyl.com.ua/wp-json/wp/v2/posts?status=publish&_embed',
+    posts: [],
+    postsLength: null,
+    postsLengthFull: false,
+    postsPerPage: 5,
+    loadFrom: 0,
+    loadTo: null,
+    loading: true,
+    loadingPosts: false
+  },
+  created() {
+    this.loadPosts();
+  },
+  methods: {
+    loadPosts() {
+      fetch(this.postsUrl)
+      .then(response => response.json())
+      .then(json => {
+        this.posts = json.slice(0, this.postsPerPage);
+        this.postsLength = json.length;
+        this.loading = false;
+      });
+    },
+    loadMorePosts() {
+      if(!this.loadingPosts) {
+        this.loadingPosts = true;
+        this.loadFrom += this.postsPerPage;
+        this.loadTo = this.loadFrom + this.postsPerPage;
+        if(this.loadFrom < this.postsLength) {
+          fetch(this.postsUrl)
+          .then(response => response.json())
+          .then(json => {
+            const newPosts = json.slice(this.loadFrom, this.loadTo);
+            newPosts.forEach(newItem => {
+              this.posts.push(newItem);
+            });
+            // this.posts.push(newPosts);
+            this.loadingPosts = false;
+          });
+        } else {
+          this.postsLengthFull = true;
+        }
+      }
+    }
+  }
+});
+</script>
+
+<script src="js/jokes.js"></script>
+<script>
+new Vue({
+  el: '#jokes',
+  data: {
+    jokes: _jokes,
+    currentJoke: null,
+    currentIdx: null
+  },
+  created() {
+    this.loadJoke();
+  },
+  methods: {
+    loadJoke() {
+      const idx = Math.floor(Math.random() * this.jokes.length);
+      if ( this.currentIdx === idx ) {
+        loadJoke();
+      } else {
+        this.currentJoke = this.jokes[idx];
+      }
+      this.currentIdx = idx;
+    }
+  }
+});
+</script>
+
+<script src="js/slick.min.js"></script>
+<script>
+  $('#slick').slick({
+    infinite: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    adaptiveHeight: false
+  });
+  $('[data-slide]').click(function(e) {
+    e.preventDefault();
+    var slideno = $(this).data('slide');
+    $('#slick').slick('slickGoTo', slideno - 1);
+  });
+  $('#slick').on('afterChange', function(event, slick, currentSlide){
+    var curr = currentSlide + 1;
+    $('[data-slide="'+curr+'"]').addClass('active').siblings().removeClass('active');
+  });
+</script>
